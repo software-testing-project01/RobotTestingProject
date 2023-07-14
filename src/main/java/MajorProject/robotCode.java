@@ -6,13 +6,17 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class robotCode {
+	public static boolean quitFlag=false;
+	public static String printCheck;
+	public static String printFloorCheck;
 	public static int[][] floor;
     public static int dimension;
     public static int currentPositionX;
     public static int currentPositionY;
     public static boolean penDown;
     public static char direction;
-
+    public static boolean isPrinted;
+    public static boolean invalidMove;
     public static void main(String[] args) {
 //        initializeSyst)em(10; // Initialize the system with a 10x10 floor
 
@@ -59,6 +63,12 @@ public class robotCode {
 				command.charAt(0) != 'q' && command.charAt(0) != 'Q'  && command.trim().length() != 0){
             throw new IllegalArgumentException("Invalid Input");
         }
+        
+        if (command.charAt(0) == 'i' || command.charAt(0) == 'm') {
+        	if(arg.length()==0) {
+        		throw new IllegalArgumentException("Invalid Input, please enter a number also");
+        	}
+		}
 
         switch (cmd) {
            
@@ -85,6 +95,7 @@ public class robotCode {
                 printCurrentPosition();
                 break;
             case 'Q':
+            	quitFlag=true;
                 System.exit(0);
                 break;
             case 'I':
@@ -98,16 +109,18 @@ public class robotCode {
     }
 
     private static void initializeSystem(int size) {
-        dimension=size;
+    	
+    	 if (size == 0) {
+             throw new IllegalArgumentException("Floor cannoot be Zero");
+ 		}
+    	dimension=size;
     	floor = new int[size][size];
         currentPositionX = 0;
         currentPositionY = 0;
         penDown = false;
         direction = 'N';
         
-        if (size == 0) {
-            throw new IllegalArgumentException("Floor size cannot be zero");
-		}
+        
     }
 
     private static void rotateRight() {
@@ -172,6 +185,7 @@ public class robotCode {
             currentPositionY = newY;
         } else {
             System.out.println("Invalid move!");
+            invalidMove=true;
         }
     }
 
@@ -192,25 +206,39 @@ public class robotCode {
     }
 
     public static void printFloor() {
+    	printFloorCheck="";
         System.out.println("Floor:");
+        printFloorCheck+="Floor:\n";
         for (int i = dimension-1;i>=0;i-- ) {
         	System.out.print(i+" ");
+        	printFloorCheck+=i+" ";
             for (int j=0;j<dimension;j++) {
-            	if(floor[i][j]==0) System.out.print("  ");
-            	else System.out.print("* ");
+            	if(floor[i][j]==0) { System.out.print("  ");
+            	
+            	printFloorCheck+="  ";
+            	}
+            	else { System.out.print("* ");
+            	printFloorCheck+="* ";
+            	}
             }
             System.out.println();
+            printFloorCheck+="\n";
         }
         System.out.print(" ");
+        printFloorCheck+=" ";
         for(int i=0;i<dimension;i++) {
         	System.out.print(" "+i);
+        	printFloorCheck+=" "+i;
         }
         System.out.println();
+        printFloorCheck+="\n";
     }
 
-    private static void printCurrentPosition() {
+    public static void printCurrentPosition() {
+    	printCheck="Current Position: [" + currentPositionX + ", " + currentPositionY + "]\n"+"Pen is " + (penDown ? "down" : "up")+"\n"+"Facing " + direction;
         System.out.println("Current Position: [" + currentPositionX + ", " + currentPositionY + "]");
         System.out.println("Pen is " + (penDown ? "down" : "up"));
         System.out.println("Facing " + direction);
+        isPrinted=true;
     }
 }
