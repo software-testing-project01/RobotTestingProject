@@ -18,29 +18,12 @@ public class robotCode {
     public static boolean isPrinted;
     public static boolean invalidMove;
     public static void main(String[] args) {
-//        initializeSyst)em(10; // Initialize the system with a 10x10 floor
-
-        // Sample commands for testing
-//        processCommand("D");
-//        processCommand("M 5");
-//        processCommand("R");
-//        processCommand("M 3");
-//        processCommand("U");
-//        processCommand("M 2");
-//        processCommand("L");
-//        processCommand("M 4");
-//        processCommand("P");
-//        processCommand("C");
-//        processCommand("Q");
         
-        Scanner scan=new Scanner(System.in);
-//    	System.out.println("Please Enter the Floor Size");
+        Scanner scan=new Scanner(System.in);   
 		int dimension;
-//		initializeSystem(dimension);
 		robotCode robot1=new robotCode();
-		
-		
-		while(true) {
+
+		while(!quitFlag) {
 			System.out.println("Enter Command: ");
 			String input=scan.nextLine();
 			robot1.processCommand(input);
@@ -48,6 +31,9 @@ public class robotCode {
     }
 
     public static void processCommand(String command) {
+    	if (command==null) {
+            throw new java.lang.NullPointerException("cannot be null");
+		}
         char cmd = Character.toUpperCase(command.charAt(0));
         String arg = command.substring(1).trim();
 //        int arg=10;
@@ -55,6 +41,12 @@ public class robotCode {
         if (command.trim().length() == 0) {
             throw new IllegalArgumentException("cannot be blank Spaces only");
 		}
+        
+        if (command.equals("")) {
+            throw new java.lang.StringIndexOutOfBoundsException("Input cannot be empty");
+		}
+        
+        
         
         if (command.charAt(0) != 'i' && command.charAt(0) != 'I' && command.trim().length() != 0 && command.charAt(0) != 'u' && command.charAt(0) != 'U' && command.trim().length() != 0 && 
 				command.charAt(0) != 'd' && command.charAt(0) != 'D' && command.trim().length() != 0 && command.charAt(0) != 'r' && command.charAt(0) != 'R' && command.trim().length() != 0 &&
@@ -73,10 +65,12 @@ public class robotCode {
         switch (cmd) {
            
             case 'D':
-                penDown = true;
+            	doPenDown();
+               
                 break;
             case 'U':
-                penDown = false;
+            	doPenUp();
+                
                 break;
             case 'R':
                 rotateRight();
@@ -95,8 +89,9 @@ public class robotCode {
                 printCurrentPosition();
                 break;
             case 'Q':
-            	quitFlag=true;
-                System.exit(0);
+            	
+            	quit();
+               
                 break;
             case 'I':
                 int size = Integer.parseInt(arg);
@@ -107,8 +102,23 @@ public class robotCode {
                 break;
         }
     }
+    public static void doPenDown() {
+    	
+    	    penDown = true;
+    }
+    
+    public static void doPenUp() {
+    	
+	    penDown = false;
+}
+    
+    public static void quit() {
+    	quitFlag=true;
+    		
+}
 
-    private static void initializeSystem(int size) {
+   
+    public static void initializeSystem(int size) {
     	
     	 if (size == 0) {
              throw new IllegalArgumentException("Floor cannoot be Zero");
@@ -123,7 +133,7 @@ public class robotCode {
         
     }
 
-    private static void rotateRight() {
+    public static void rotateRight() {
         switch (direction) {
             case 'N':
                 direction = 'E';
@@ -140,7 +150,7 @@ public class robotCode {
         }
     }
 
-    private static void rotateLeft() {
+    public static void rotateLeft() {
         switch (direction) {
             case 'N':
                 direction = 'W';
@@ -157,7 +167,7 @@ public class robotCode {
         }
     }
 
-    private static void move(int steps) {
+    public static void move(int steps) {
         int newX = currentPositionX;
         int newY = currentPositionY;
 
@@ -189,7 +199,7 @@ public class robotCode {
         }
     }
 
-    private static void drawLine(int newX, int newY) {
+    public static void drawLine(int newX, int newY) {
         if (currentPositionX == newX) {
             int start = Math.min(currentPositionY, newY);
             int end = Math.max(currentPositionY, newY);
