@@ -10,6 +10,94 @@ import org.junit.jupiter.api.function.Executable;
 
 public class RobotTest {
 @Test
+    public void testRobotInputIsInvalidForBlankSpacesOnly() {
+         
+    	IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, new Executable() {
+             
+            @Override
+            public void execute() throws Throwable {
+                robotCode user = new robotCode();
+                user.processCommand("      ");
+            }
+        }, "cannot be blank Spaces only");
+    	Assertions.assertEquals("cannot be blank Spaces only", thrown.getMessage());
+    }
+	
+	@Test
+    public void testRobotInputIsInvalidForNull() {
+         
+		java.lang.NullPointerException thrown = Assertions.assertThrows(java.lang.NullPointerException.class, new Executable() {
+             
+            @Override
+            public void execute() throws Throwable {
+                robotCode user = new robotCode();
+                user.processCommand(null);
+            }
+        }, "cannot be null");
+    	Assertions.assertEquals("cannot be null", thrown.getMessage());
+    
+	}
+	@Test
+    public void testRobotInputIsInvalidforInvalidCommand() {
+         
+    	IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, new Executable() {
+             
+            @Override
+            public void execute() throws Throwable {
+            	robotCode user = new robotCode();
+                user.processCommand("b6");
+            }
+        }, "Invalid Input");
+    	Assertions.assertEquals("Invalid Input", thrown.getMessage());
+    }
+	
+	@Test
+    public void testRobotInputIsInvalidforEmpty() {
+         
+		java.lang.StringIndexOutOfBoundsException thrown = Assertions.assertThrows(java.lang.StringIndexOutOfBoundsException.class, new Executable() {
+             
+            @Override
+            public void execute() throws Throwable {
+            	robotCode user = new robotCode();
+                user.processCommand("");
+            }
+        }, "String index out of range: 0");
+    	Assertions.assertEquals("String index out of range: 0", thrown.getMessage());
+    }
+	
+	@Test
+    public void testNoNumberForInitializationAndMoveInput() {
+         
+    	IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, new Executable() {
+             
+            @Override
+            public void execute() throws Throwable {
+            	robotCode user = new robotCode();
+                user.processCommand("i   ");
+            }
+        }, "Invalid Input, please enter a number also");
+    	Assertions.assertEquals("Invalid Input, please enter a number also", thrown.getMessage());
+    }
+	
+
+	
+	@Test
+    public void testFloorNotInilizeWithZero() {
+         
+    	IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, new Executable() {
+             
+            @Override
+            public void execute() throws Throwable {
+            	robotCode user = new robotCode();
+                user.processCommand("i0");
+            }
+        }, "Floor cannoot be Zero");
+    	Assertions.assertEquals("Floor cannoot be Zero", thrown.getMessage());
+    }
+	
+
+	
+@Test
     public void testMoveNorthIsValid() {
        	
 		robotCode user = new robotCode();
