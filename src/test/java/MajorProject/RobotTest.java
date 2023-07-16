@@ -272,7 +272,88 @@ public class RobotTest {
 	      assertNotEquals("W", user.direction);
 	  }
 	
-}
+@Test
+    public void CheckRobotIsInitializedProperly() {
+       	
+		robotCode user = new robotCode();
+       	user.processCommand("i10");
+           user.processCommand("m2");
+
+       	System.out.println(user.currentPositionX);
+       	System.out.println(user.currentPositionY);
+
+       	assertEquals(false, user.penDown);
+       	assertEquals(0, user.currentPositionX);
+       	assertEquals(0, user.currentPositionX);
+       	assertEquals('N', user.direction);
+       }
+	@Test
+    public void testRobotforPenDown() {
+         
+		robotCode user = new robotCode();
+		 user.processCommand("d");
+		 assertEquals(true, user.penDown);
+		 
+    }
+	
+	
+	
+	@Test
+    public void testRobotforPenUp() {
+         
+		robotCode user = new robotCode();
+		 user.processCommand("u");
+		 assertEquals(false, user.penDown);
+		 
+    }
+	@Test
+	 public void ArrayOnlyChangeWhenPenIsDown() {
+	       	
+			robotCode user = new robotCode();
+	       	user.processCommand("i 10");
+	       	user.penDown=true;
+	       	user.processCommand("m 2");
+	       	
+	       	assertEquals(1,user.floor[0][0]);
+	          assertEquals(1,user.floor[1][0]);
+	          assertEquals(1,user.floor[2][0]);
+	       }
+
+	 @Test
+	 public void ArrayDoesNotChangeWhenPenIsUp() {
+	       	
+			robotCode user = new robotCode();
+	       	user.processCommand("i 10");
+	       	user.penDown=false;
+	       	user.processCommand("m 2");
+	       	
+	       	assertEquals(0,user.floor[0][0]);
+	          assertEquals(0,user.floor[1][0]);
+	          assertEquals(0,user.floor[2][0]);
+	       }
+	@Test
+	 public void RobotShowsCorrectCurrentDetails() {
+	       	
+			robotCode user = new robotCode();
+	       	user.processCommand("i10");
+	       	user.currentPositionX= 7;
+	       	user.currentPositionY= 7;
+	    	user.penDown= true;
+
+	       	user.direction='N';
+	       	user.penDown=true;
+	           user.processCommand("m2");
+	       	user.processCommand("c");
+
+	       	
+	           assertEquals("Current Position: [7, 9]\n"
+	           		+ "Pen is down\n"
+	           		+ "Facing N", user.printCheck);
+	    
+	       
+	       
+
+	       }
 	@Test
 	 public void RobotShowsCorrectFloor() {
 	       	
