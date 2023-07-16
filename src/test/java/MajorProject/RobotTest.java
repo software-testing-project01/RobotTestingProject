@@ -179,7 +179,132 @@ public class RobotTest {
        	user.penDown=true;
            user.processCommand("m7");
           assertEquals(true, user.invalidMove);
+    }
+	 @Test
+	 public void testIfQuitWorks() {
+	       	
+			robotCode user = new robotCode();
+	       	user.processCommand("q");
+//	       	user.penDown=false;
+//	       	user.processCommand("m 2");
+	       	
+	       	assertEquals(true,user.quitFlag);
+//	          assertEquals(0,user.floor[1][0]);
+//	          assertEquals(0,user.floor[2][0]);
+	       }
+	@Test
+	    public void testMoveWest() {
+	       	
+			robotCode user = new robotCode();
+	       	user.processCommand("i10");
+	       	user.currentPositionX= 7;
+	       	user.currentPositionY= 7;
 
-       }
+	       	user.direction='E';
+	       	user.penDown=true;
+	           user.processCommand("m2");
+	         assertEquals(9, user.currentPositionX);
+
+	       }
+		
+		@Test
+	    public void testMoveWestIsInvalid() {
+	       	
+			robotCode user = new robotCode();
+	       	user.processCommand("i10");
+	       	user.currentPositionX= 5;
+	       	user.currentPositionY= 5;
+	       	user.direction='W';
+	       	user.penDown=true;
+	           user.processCommand("m7");
+	          assertEquals(true, user.invalidMove);
+
+	       }
+		
+	  @Test
+	  public void testMoveRight() {
+	  	
+		  robotCode user = new robotCode();
+		  user.processCommand("i10");
+		  user.direction='W';
+		  user.rotateRight();
+	        assertEquals('N', user.direction);
+	        user.rotateRight();
+	        assertEquals('E', user.direction);
+	        user.rotateRight();
+	        assertEquals('S', user.direction);
+	  }
+	  @Test
+	  public void testMoveLeft() {
+	  	
+		  robotCode user = new robotCode();
+		  user.processCommand("i10");
+		  user.direction='W';
+		  user.rotateLeft();
+	        assertEquals('S', user.direction);
+	        user.rotateLeft();
+	        assertEquals('E', user.direction);
+	        user.rotateLeft();
+	        assertEquals('N', user.direction);
+	  }
+
+	  @Test
+	public void testInvalidMoveRight() {
+		  robotCode user = new robotCode();
+		  user.processCommand("i10");
+		  user.direction='W';
+		  user.rotateRight();
+		
+	    assertNotEquals("S", user.direction);
+	    assertNotEquals("E", user.direction);
+	    assertNotEquals("W", user.direction);
+	}
+	  
+	  @Test
+	  public void testInvalidMoveLeft() {
+	  	  robotCode user = new robotCode();
+	  	  user.processCommand("i10");
+	  	  user.direction='W';
+	  	  user.rotateLeft();
+	  	
+	      assertNotEquals("N", user.direction);
+	      assertNotEquals("E", user.direction);
+	      assertNotEquals("W", user.direction);
+	  }
+	
+}
+	@Test
+	 public void RobotShowsCorrectFloor() {
+	       	
+			robotCode user = new robotCode();
+	       	user.processCommand("i10");
+	       	user.currentPositionX= 7;
+	       	user.currentPositionY= 7;
+	    	user.penDown= true;
+
+	       	user.direction='N';
+	       	user.penDown=true;
+	           user.processCommand("m2");
+	       	user.processCommand("p");
+
+	       	
+	           assertEquals("Floor:\n"
+	           		+ "9               *     \n"
+	           		+ "8               *     \n"
+	           		+ "7               *     \n"
+	           		+ "6                     \n"
+	           		+ "5                     \n"
+	           		+ "4                     \n"
+	           		+ "3                     \n"
+	           		+ "2                     \n"
+	           		+ "1                     \n"
+	           		+ "0                     \n"
+	           		+ "  0 1 2 3 4 5 6 7 8 9\n", user.printFloorCheck);
+	    
+	       
+	       
+
+	       }
+       
   
 }
