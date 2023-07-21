@@ -223,7 +223,11 @@ public class robotCode {
         	System.out.print(i+" ");
         	printFloorCheck+=i+" ";
             for (int j=0;j<dimension;j++) {
-            	if(floor[i][j]==0) { System.out.print("  ");
+              if(i==currentPositionY && j== currentPositionX && floor[i][j]==0) { System.out.print("R ");
+            	
+            	printFloorCheck+="R ";
+            	}
+                else if(floor[i][j]==0) { System.out.print("  ");
             	
             	printFloorCheck+="  ";
             	}
