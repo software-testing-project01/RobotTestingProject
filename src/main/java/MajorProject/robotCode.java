@@ -74,9 +74,11 @@ public class robotCode {
                 break;
             case 'R':
                 rotateRight();
+                
                 break;
             case 'L':
                 rotateLeft();
+                
                 break;
             case 'M':
                 int steps = Integer.parseInt(arg);
@@ -97,9 +99,7 @@ public class robotCode {
                 int size = Integer.parseInt(arg);
                 initializeSystem(size);
                 break;
-            default:
-                System.out.println("Invalid command!");
-                break;
+            
         }
     }
     public static void doPenDown() {
@@ -147,6 +147,9 @@ public class robotCode {
             case 'W':
                 direction = 'N';
                 break;
+            default:
+            	System.out.println("Invalid Input");
+            	break;
         }
     }
 
@@ -164,6 +167,9 @@ public class robotCode {
             case 'E':
                 direction = 'N';
                 break;
+            default:
+            	System.out.println("Invalid Input");
+            	break;
         }
     }
 
@@ -223,11 +229,8 @@ public class robotCode {
         	System.out.print(i+" ");
         	printFloorCheck+=i+" ";
             for (int j=0;j<dimension;j++) {
-              if(i==currentPositionY && j== currentPositionX && floor[i][j]==0) { System.out.print("R ");
-            	
-            	printFloorCheck+="R ";
-            	}
-                else if(floor[i][j]==0) { System.out.print("  ");
+            	if(floor[i][j]==0) 
+            	{ System.out.print("  ");
             	
             	printFloorCheck+="  ";
             	}
