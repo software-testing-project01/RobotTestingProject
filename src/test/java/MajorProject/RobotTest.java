@@ -185,13 +185,16 @@ public class RobotTest {
 	 public void testIfQuitWorks() {
 	       	
 			robotCode user = new robotCode();
-	       	user.processCommand("q");
+			user.quitFlag=true;
+			user.processCommand("q");
 //	       	user.penDown=false;
 //	       	user.processCommand("m 2");
-	       	
+	       	user.processCommand("i10");
 	       	assertEquals(true,user.quitFlag);
-//	          assertEquals(0,user.floor[1][0]);
-//	          assertEquals(0,user.floor[2][0]);
+            
+	       	user.quitFlag=false;
+	       	assertEquals(false,user.quitFlag);
+	       	user.processCommand("i10");
 	       }
 	@Test
 	    public void testMoveWest() {
@@ -228,12 +231,17 @@ public class RobotTest {
 		  robotCode user = new robotCode();
 		  user.processCommand("i10");
 		  user.direction='W';
-		  user.rotateRight();
+		  user.processCommand("R");
 	        assertEquals('N', user.direction);
-	        user.rotateRight();
+	        user.processCommand("R");
 	        assertEquals('E', user.direction);
-	        user.rotateRight();
+	        user.processCommand("R");
 	        assertEquals('S', user.direction);
+	        user.processCommand("R");
+	        assertEquals('W', user.direction);
+	        user.direction='A';
+	        user.processCommand("R");
+		        assertNotEquals('S', user.direction);
 	  }
 	  @Test
 	  public void testMoveLeft() {
@@ -241,14 +249,21 @@ public class RobotTest {
 		  robotCode user = new robotCode();
 		  user.processCommand("i10");
 		  user.direction='W';
-		  user.rotateLeft();
+		  user.processCommand("L");
 	        assertEquals('S', user.direction);
-	        user.rotateLeft();
+	        user.processCommand("L");
 	        assertEquals('E', user.direction);
-	        user.rotateLeft();
+	        user.processCommand("L");
 	        assertEquals('N', user.direction);
+	        user.processCommand("L");
+	        assertEquals('W', user.direction);
+	        user.direction='A';
+	        user.processCommand("L");
+		        assertNotEquals('S', user.direction);
+	        
 	  }
 
+	  
 	  @Test
 	public void testInvalidMoveRight() {
 		  robotCode user = new robotCode();
@@ -259,6 +274,7 @@ public class RobotTest {
 	    assertNotEquals("S", user.direction);
 	    assertNotEquals("E", user.direction);
 	    assertNotEquals("W", user.direction);
+	    
 	}
 	  
 	  @Test
@@ -355,6 +371,7 @@ public class RobotTest {
 	       
 
 	       }
+	
 	@Test
 	 public void RobotShowsCorrectFloor() {
 	       	
